@@ -1,0 +1,172 @@
+#include <iostream>
+using namespace std;
+
+const int MAX = 100;
+
+
+void inputMarks(int marks[], int n) {
+    cout << "\nEnter marks of " << n << " students:\n";
+    for (int i = 0; i < n; i++) {
+        cout << "Student " << i + 1 << ": ";
+        cin >> marks[i];
+    }
+}
+void displayMarks(int marks[], int n) {
+    cout << "Marks: ";
+    for (int i = 0; i < n; i++) {
+        cout << marks[i] << " ";
+    }
+    cout << "\n";
+}
+float averageMarks(int marks[], int n) {
+    int total = 0;
+    for (int i = 0; i < n; i++) {
+        total += marks[i];
+    }
+    return (float)total / n;
+}
+
+int findMax(int marks[], int n) {
+    int max = marks[0];
+    for (int i = 1; i < n; i++) {
+        if (marks[i] > max)
+            max = marks[i];
+    }
+    return max;
+}
+int findMin(int marks[], int n) {
+    int min = marks[0];
+    for (int i = 1; i < n; i++) {
+        if (marks[i] < min)
+            min = marks[i];
+    }
+    return min;
+}
+
+void bubbleSortAsc(int marks[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (marks[j] > marks[j + 1]) {
+                int temp = marks[j];
+                marks[j] = marks[j + 1];
+                marks[j + 1] = temp;
+            }
+        }
+    }
+}
+void selectionSortDesc(int marks[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        int maxIndex = i;
+        for (int j = i + 1; j < n; j++) {
+            if (marks[j] > marks[maxIndex])
+                maxIndex = j;
+        }
+        int temp = marks[i];
+        marks[i] = marks[maxIndex];
+        marks[maxIndex] = temp;
+    }
+}
+int linearSearch(int marks[], int n, int key) {
+    for (int i = 0; i < n; i++) {
+        if (marks[i] == key)
+            return i;
+    }
+    return -1;
+}
+int binarySearch(int marks[], int n, int key) {
+    int low = 0, high = n - 1;
+    while (low <= high) {
+        int mid = (low + high) / 2;
+        if (marks[mid] == key)
+            return mid;
+        else if (key > marks[mid])
+            low = mid + 1;
+        else
+            high = mid - 1;
+    }
+    return -1;
+}
+
+int main() {
+    int n, marks[MAX];
+    cout << "Enter number of students: ";
+    cin >> n;
+    inputMarks(marks, n);
+
+    int choice;
+    do {
+        cout << "\n====== Student Marks Analyzer ======\n";
+        cout << "1. Display All Marks\n";
+        cout << "2. Calculate Average\n";
+        cout << "3. Find Maximum and Minimum\n";
+        cout << "4. Sort Ascending (Bubble Sort)\n";
+        cout << "5. Sort Descending (Selection Sort)\n";
+        cout << "6. Search Marks (Linear Search)\n";
+        cout << "7. Search Marks (Binary Search)\n";
+        cout << "8. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                displayMarks(marks, n);
+                break;
+
+            case 2:
+                cout << "Average Marks: " << averageMarks(marks, n) << "\n";
+                break;
+
+            case 3:
+                cout << "Maximum Marks: " << findMax(marks, n) << "\n";
+                cout << "Minimum Marks: " << findMin(marks, n) << "\n";
+                break;
+
+            case 4:
+                bubbleSortAsc(marks, n);
+                cout << "Marks sorted in ascending order.\n";
+                displayMarks(marks, n);
+                break;
+
+            case 5:
+                selectionSortDesc(marks, n);
+                cout << "Marks sorted in descending order.\n";
+                displayMarks(marks, n);
+                break;
+
+            case 6: {
+                int value;
+                cout << "Enter marks to search: ";
+                cin >> value;
+                int pos = linearSearch(marks, n, value);
+                if (pos != -1)
+                    cout << "Found at position: " << pos + 1 << "\n";
+                else
+                    cout << "Not found.\n";
+                break;
+            }
+
+            case 7: {
+                int value;
+                cout << "Enter marks to search: ";
+                cin >> value;
+                bubbleSortAsc(marks, n); 
+                int pos = binarySearch(marks, n, value);
+                if (pos != -1)
+                    cout << "Found at position: " << pos + 1 << "\n";
+                else
+                    cout << "Not found.\n";
+                break;
+            }
+
+            case 8:
+                cout << "Exiting program...\n";
+                break;
+
+            default:
+                cout << "Invalid choice. Try again.\n";
+        }
+
+    } while (choice != 8);
+
+    return 0;
+}
