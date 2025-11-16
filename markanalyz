@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 
-const int MAX = 100;
+const int MAX = 150;
 
 
 void inputMarks(int marks[], int n) {
@@ -54,35 +54,11 @@ void bubbleSortAsc(int marks[], int n) {
         }
     }
 }
-void selectionSortDesc(int marks[], int n) {
-    for (int i = 0; i < n - 1; i++) {
-        int maxIndex = i;
-        for (int j = i + 1; j < n; j++) {
-            if (marks[j] > marks[maxIndex])
-                maxIndex = j;
-        }
-        int temp = marks[i];
-        marks[i] = marks[maxIndex];
-        marks[maxIndex] = temp;
-    }
-}
+
 int linearSearch(int marks[], int n, int key) {
     for (int i = 0; i < n; i++) {
         if (marks[i] == key)
             return i;
-    }
-    return -1;
-}
-int binarySearch(int marks[], int n, int key) {
-    int low = 0, high = n - 1;
-    while (low <= high) {
-        int mid = (low + high) / 2;
-        if (marks[mid] == key)
-            return mid;
-        else if (key > marks[mid])
-            low = mid + 1;
-        else
-            high = mid - 1;
     }
     return -1;
 }
